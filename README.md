@@ -14,9 +14,9 @@ Further info can be found at:
 http://mockmoon-cybernetics.ch/computer/p-touch2430pc/
 
 # Build
-`autoreconf --install `
-`make`
-`sudo make install`
+- `autoreconf --install `
+- `make`
+- `sudo make install`
 
 # U-Dev
 To avoid running as root, add the line 
