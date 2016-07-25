@@ -41,7 +41,7 @@ int find_fontsize(int want_px, char *font, char *text);
 int needed_width(char *text, char *font, int fsz);
 int print_img(ptouch_dev ptdev, gdImage *im);
 int write_png(gdImage *im, const char *file);
-gdImage *render_text(char *font, char *line[], int lines, int tape_width);
+gdImage *render_text(char *font, char *line[], int lines, int tape_width, int inverse);
 void usage(char *progname);
 int parse_args(int argc, char **argv);
 
@@ -51,6 +51,7 @@ char *font_file="/usr/share/fonts/liberation/LiberationSansNarrow-Regular.ttf";
 char *save_png=NULL;
 int verbose=0;
 int fontsize=0;
+int inverse=0;
 
 /* --------------------------------------------------------------------
    -------------------------------------------------------------------- */
@@ -187,7 +188,7 @@ int needed_width(char *text, char *font, int fsz)
 	return brect[2]-brect[0];
 }
 
-gdImage *render_text(char *font, char *line[], int lines, int tape_width)
+gdImage *render_text(char *font, char *line[], int lines, int tape_width, int inverse)
 {
 	int brect[8];
 	int i, black, x=0, tmp, fsz=0, ofs;
@@ -221,8 +222,13 @@ gdImage *render_text(char *font, char *line[], int lines, int tape_width)
 		}
 	}
 	im=gdImageCreatePalette(x, tape_width);
-	gdImageColorAllocate(im, 255, 255, 255);
-	black=gdImageColorAllocate(im, 0, 0, 0);
+	if(inverse) {
+		gdImageColorAllocate(im, 0, 0, 0);
+		black=gdImageColorAllocate(im, 255, 255, 255);
+	} else {
+		gdImageColorAllocate(im, 255, 255, 255);
+		black=gdImageColorAllocate(im, 0, 0, 0);
+	}
 	/* gdImageStringFT(im,brect,fg,fontlist,size,angle,x,y,string) */
 	for (i=0; i<lines; i++) {
 		if ((p=gdImageStringFT(NULL, &brect[0], -black, font, fsz, 0.0, 0, 0, line[i])) != NULL) {
@@ -251,6 +257,7 @@ void usage(char *progname)
 	printf("\t--text <text>\t\tPrint 1-4 lines of text.\n");
 	printf("\t\t\t\tIf the text contains spaces, use quotation marks\n\t\t\t\taround it.\n");
 	printf("\t--cutmark\t\tPrint a mark where the tape should be cut\n");
+	printf("\t--inverse\t\tPrint the inverse image (white text on black background)\n");
 	exit(1);
 }
 
@@ -284,6 +291,8 @@ int parse_args(int argc, char **argv)
 		} else if (strcmp(&argv[i][1], "-cutmark") == 0) {
 			continue;	/* not done here */
 		} else if (strcmp(&argv[i][1], "-info") == 0) {
+			continue;	/* not done here */
+		} else if (strcmp(&argv[i][1], "-inverse") == 0) {
 			continue;	/* not done here */
 		} else if (strcmp(&argv[i][1], "-image") == 0) {
 			if (i+1<argc) {
@@ -349,6 +358,8 @@ int main(int argc, char *argv[])
 			} else {
 				usage(argv[0]);
 			}
+		} else if (strcmp(&argv[i][1], "-inverse") == 0) {
+			inverse = 1;
 		} else if (strcmp(&argv[i][1], "-writepng") == 0) {
 			if (i+1<argc) {
 				save_png=argv[++i];
@@ -372,7 +383,7 @@ int main(int argc, char *argv[])
 				i++;
 				line[lines]=argv[i];
 			}
-			if ((im=render_text(font_file, line, lines, tape_width)) == NULL) {
+			if ((im=render_text(font_file, line, lines, tape_width, inverse)) == NULL) {
 				printf(_("could not render text\n"));
 				return 1;
 			}

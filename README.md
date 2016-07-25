@@ -40,4 +40,5 @@ print-commands:
                                 If the text contains spaces, use quotation marks
                                 around it.
         --cutmark               Print a mark where the tape should be cut
+        --inverse               Print the inverse image (white text on black background)
 ```
