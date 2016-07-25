@@ -32,6 +32,8 @@
 
 #define _(s) gettext(s)
 
+//#define DEBUG
+
 struct _pt_tape_info tape_info[6]= {
 	{6, 32},	/* 6mm tape is 32px wide? works for me ;-) */
 	{9, 52},	/* 9mm tape is 52px wide? works for me ;-) */
@@ -66,7 +68,9 @@ int ptouch_open(ptouch_dev *ptdev)
 		fprintf(stderr, _("libusb_init() failed\n"));
 		return -1;
 	}
-//	libusb_set_debug(NULL, 3);
+#ifdef DEBUG
+	libusb_set_debug(NULL, 3);
+#endif /* DEBUG */
 	if ((cnt=libusb_get_device_list(NULL, &devs)) < 0) {
 		return -1;
 	}
