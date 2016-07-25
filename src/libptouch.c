@@ -2,6 +2,7 @@
 	libptouch - functions to help accessing a brother ptouch
 
 	Copyright (C) 2013 Dominic Radermacher <dominic.radermacher@gmail.com>
+	Copyright (C) 2016 Brian Murray <bmurray7jhu@gmail.com>
 
 	This program is free software; you can redistribute it and/or modify it
 	under the terms of the GNU General Public License version 3 as
