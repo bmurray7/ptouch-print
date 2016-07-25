@@ -24,3 +24,20 @@ To avoid running as root, add the line
 SUBSYSTEM=="usb",ATTR{idVendor}=="04f9", ATTR{idProduct}=="202d", MODE="0666"
 ```
 to the file `/etc/udev/rules.d/99-local.rules`
+
+# Usage
+```
+usage: ./ptouch-print [options] <print-command(s)>
+options:
+        --font <file>           use font <file> or <name>
+        --writepng <file>       instead of printing, write output to png file
+                                This currently works only when using
+                                EXACTLY ONE --text statement
+print-commands:
+        --image <file>          print the given image which must be a 2 color
+                                (black/white) png
+        --text <text>           Print 1-4 lines of text.
+                                If the text contains spaces, use quotation marks
+                                around it.
+        --cutmark               Print a mark where the tape should be cut
+```
