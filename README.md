@@ -1,4 +1,4 @@
-=About=
+# About
 ptouch is a command line tool to print labels on Brother P-Touch
 printers on Linux.
 
@@ -13,12 +13,12 @@ for further models, too).
 Further info can be found at:
 http://mockmoon-cybernetics.ch/computer/p-touch2430pc/
 
-==Build==
+# Build
 `autoreconf --install `
 `make`
 `sudo make install`
 
-==U-Dev==
+# U-Dev
 To avoid running as root, add the line 
 ```
 SUBSYSTEM=="usb",ATTR{idVendor}=="04f9", ATTR{idProduct}=="202d", MODE="0666"
