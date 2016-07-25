@@ -28,6 +28,8 @@
 #include "gettext.h"	/* gettext(), ngettext() */
 #include "ptouch.h"
 
+//#define DEBUG
+
 #define _(s) gettext(s)
 
 #define MAX_LINES 4	/* maybe this should depend on tape size */
@@ -191,8 +193,9 @@ gdImage *render_text(char *font, char *line[], int lines, int tape_width)
 	int i, black, x=0, tmp, fsz=0, ofs;
 	char *p;
 	gdImage *im=NULL;
-
-//	printf(_("%i lines, font = '%s'\n"), lines, font);
+#ifdef DEBUG
+	printf(_("%i lines, font = '%s'\n"), lines, font);
+#endif /* DEBUG */
 	if (gdFTUseFontConfig(1) != GD_TRUE) {
 		printf(_("warning: font config not available\n"));
 	}
