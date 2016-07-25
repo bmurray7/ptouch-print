@@ -48,7 +48,7 @@ int parse_args(int argc, char **argv);
 
 // char *font_file="/usr/share/fonts/TTF/Ubuntu-M.ttf";
 // char *font_file="Ubuntu:medium";
-char *font_file="/usr/share/fonts/liberation/LiberationSansNarrow-Regular.ttf";
+char *font_file="LiberationSansNarrow-Regular";
 char *save_png=NULL;
 int verbose=0;
 int fontsize=0;
