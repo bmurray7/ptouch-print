@@ -45,7 +45,7 @@ int parse_args(int argc, char **argv);
 
 // char *font_file="/usr/share/fonts/TTF/Ubuntu-M.ttf";
 // char *font_file="Ubuntu:medium";
-char *font_file="DejaVuSans";
+char *font_file="/usr/share/fonts/liberation/LiberationSansNarrow-Regular.ttf";
 char *save_png=NULL;
 int verbose=0;
 int fontsize=0;
@@ -141,7 +141,7 @@ int get_baselineoffset(char *text, char *font, int fsz)
 {
 	int brect[8];
 
-	if (strpbrk(text, "QgjpqyQµ") == NULL) {	/* if we have none of these */
+	if (strpbrk(text, "QgjpqyQ") == NULL) {	/* if we have none of these */
 		return 0;		/* we don't need an baseline offset */
 	}				/* else we need to calculate it */
 	gdImageStringFT(NULL, &brect[0], -1, font, fsz, 0.0, 0, 0, "o");
@@ -153,7 +153,6 @@ int get_baselineoffset(char *text, char *font, int fsz)
 /* --------------------------------------------------------------------
 	Find out which fontsize we need for a given font to get a
 	specified pixel size
-	NOTE: This does NOT work for some UTF-8 chars like µ
    -------------------------------------------------------------------- */
 int find_fontsize(int want_px, char *font, char *text)
 {
@@ -249,7 +248,6 @@ void usage(char *progname)
 	printf("\t--text <text>\t\tPrint 1-4 lines of text.\n");
 	printf("\t\t\t\tIf the text contains spaces, use quotation marks\n\t\t\t\taround it.\n");
 	printf("\t--cutmark\t\tPrint a mark where the tape should be cut\n");
-	printf("\t--fontsize\t\tManually set fontsize\n");
 	exit(1);
 }
 
